@@ -12,14 +12,32 @@ export function ApiStack({ stack }: StackContext) {
       },
     },
     routes: {
-      "POST /notes": "packages/functions/src/create.main",
-      "GET /notes/{id}": "packages/functions/src/get.main",
-      "GET /notes/all": "packages/functions/src/getAll.main",   //Get All
-      "GET /notes": "packages/functions/src/list.main",     //Filtra por User_Id
-      "PUT /notes/{id}": "packages/functions/src/update.main",
-      "DELETE /notes/{id}": "packages/functions/src/delete.main",
-    },
-  });
+      "POST /notes": {
+        function: "packages/functions/src/create.main",
+        authorizer: "iam",
+      },
+      "GET /notes/{id}": {
+        function: "packages/functions/src/get.main",
+        authorizer: "iam",
+      },
+      "GET /notes/all": {
+        function: "packages/functions/src/getAll.main",
+        authorizer: "iam",
+      },
+      "GET /notes": {
+        function: "packages/functions/src/list.main",
+        authorizer: "iam",
+      },
+      "PUT /notes/{id}": {
+        function: "packages/functions/src/update.main",
+        authorizer: "iam",
+      },
+      "DELETE /notes/{id}": {
+        function: "packages/functions/src/delete.main",
+        authorizer: "iam",
+      },
+  },
+});
 
   // Show the API endpoint in the output
   stack.addOutputs({
