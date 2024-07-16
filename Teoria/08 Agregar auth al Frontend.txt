@@ -1,0 +1,31 @@
+Instalar AWS Amplify
+
+
+
+        npm add --save aws-amplify@^5
+
+
+
+Crear frontend/src/config.ts
+
+
+
+
+Agregar AWS Amplify
+
+
+/*--------------------------------------------------------------------------*/
+
+
+//App.tsx
+
+
+const [isAuthenticated, userHasAuthenticated] = useState(false);
+
+
+//src/lib/contextLib.ts
+
+        Este fragmento de código realmente simple crea y exporta dos cosas:
+
+        1 Usando la createContextAPI para crear un nuevo contexto para nuestra aplicación.
+        2 Usando useContextReact Hook para acceder al contexto.

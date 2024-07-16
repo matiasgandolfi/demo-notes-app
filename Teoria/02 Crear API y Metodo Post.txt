@@ -1,0 +1,90 @@
+Un S3 bucket es un contenedor de almacenamiento en el servicio Amazon Simple Storage Service (Amazon S3) de AWS. 
+Los buckets se utilizan para almacenar objetos, que pueden ser cualquier tipo de archivo, 
+como documentos, imágenes, videos, datos de respaldo, etc
+
+
+
+
+
+
+/*-------------------Crear un API  para la creacion de notas -----------------------------------*/
+
+
+
+
+Sigamos adelante e instalemos los paquetes que estamos usando aquí.
+
+Indicador de cambio Navega a la functionscarpeta en tu terminal.
+
+     cd packages/functions 
+Indicador de cambio Luego, ejecute lo siguiente en la packages/functions/carpeta (no en la raíz).
+
+    npm add --save aws-sdk aws-lambda uuid
+    npm add --save-dev @types/uuid @types/aws-lambda
+
+
+
+/*---------------------Probar API --------------------------------*/
+
+
+PS C:\Users\Matias> $body = @{
+    content = "Hello World"
+    attachment = "hello.jpg"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "https://06sva174zg.execute-api.us-east-1.amazonaws.com/notes" -Method Post -Body $body -ContentType "application/json"
+
+
+
+
+
+
+/*------------------------Create ----------------------------------*/
+
+
+Dado que realizaremos las mismas acciones básicas para todas nuestras API, tiene sentido realizar un proceso DRY 
+en nuestro código para crear comportamientos compartidos reutilizables tanto para la confiabilidad como para el 
+mantenimiento de la aplicación.
+
+
+
+    * Queremos crear nuestra función Lambda asyncy simplemente devolver los resultados.
+    * Queremos simplificar la forma en que realizamos llamadas a DynamoDB. No queremos tener que crear un archivo new AWS.DynamoDB.DocumentClient().
+    * Queremos gestionar de forma centralizada cualquier error en nuestras funciones Lambda.
+    * Finalmente, dado que todas nuestras funciones Lambda manejarán puntos finales de API, queremos manejar nuestras respuestas HTTP en un solo lugar.
+
+
+
+
+
+
+
+/*----------------DynamoDb Metodos-----------------------*/
+
+
+
+dynamodb utilidad que podamos compartir entre todas nuestras funciones. 
+La colocaremos en el packages/coredirectorio. Aquí es donde colocaremos toda nuestra lógica empresarial
+
+
+
+/*-----------------Handler---------------------------*/
+
+Aquí estamos creando un objeto de conveniencia que expone los métodos de cliente DynamoDB que necesitaremos en esta guía.
+
+
+
+
+            En el packages/core/
+
+            npm add --save aws-sdk aws-lambda
+            npm add --save-dev @types/aws-lambda
+
+
+Vamos a repasar esto en detalle.
+
+    Estamos creando una handlerfunción que usaremos como contenedor de nuestras funciones Lambda.
+    Toma nuestra función Lambda como argumento.
+    Luego ejecutamos la función Lambda en un try/catchbloque.
+    En caso de éxito, tomamos el resultado y lo devolvemos con un 200 código de estado.
+    Si hay un error, devolvemos el mensaje de error con un 500 código de estado.

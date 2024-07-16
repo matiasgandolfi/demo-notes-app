@@ -1,0 +1,8 @@
+l useEffectgancho toma una función y una matriz de variables. La función se llamará cada vez que se renderice el componente. Y la matriz de variables le indica a React que vuelva a ejecutar nuestra función solo si la matriz de variables ingresada ha cambiado. Esto nos permite controlar cuándo se ejecuta nuestra función. Esto tiene algunas consecuencias interesantes:
+
+Si no pasamos una matriz de variables, nuestro gancho se ejecuta cada vez que se renderiza nuestro componente.
+Si pasamos algunas variables, en cada renderizado React primero verificará si esas variables han cambiado, antes de ejecutar nuestra función.
+Si pasamos una lista vacía de variables, entonces nuestra función solo se ejecutará en la PRIMERA representación.
+En nuestro caso, solo queremos comprobar el estado de autenticación del usuario cuando nuestra aplicación se carga por primera vez. Por lo tanto, usaremos la tercera opción; simplemente pasaremos una lista vacía de variables: [].
+
+Cuando nuestra aplicación se carga por primera vez, ejecutará la onLoad función

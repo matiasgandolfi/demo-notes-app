@@ -1,0 +1,68 @@
+/packages
+
+
+    pnpm create vite frontend -- --template react-ts
+
+    cd frontend
+    pnpm install
+
+
+Cargar variables de entorno en sst
+
+    pnpm add --save-dev sst
+
+
+
+Reemplazar del package json
+
+    "dev": "vite",
+
+    por
+
+    "dev": "sst bind vite",
+
+
+
+
+Añadir app React a sst
+
+
+    stacks/FrontendStack.ts
+
+
+Darlo de alta en sst.config
+
+
+
+
+npm run dev
+
+
+    //Instalar react router
+    pnpm add --save react-router-dom
+
+
+
+En src/main.tsx
+
+    import { BrowserRouter as Router } from "react-router-dom";
+
+
+    <React.StrictMode>
+    <Router>
+        <App />
+    </Router>
+    </React.StrictMode>
+
+
+
+Crear Routes.tsx e importarlo en App.tsx 
+
+
+    //Para que no se recargue la pagina y hacerlo un single web app 
+
+    pnpm add --save react-router-bootstrap
+    pnpm add --save-dev @types/react-router-bootstrap
+
+
+

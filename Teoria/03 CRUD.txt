@@ -1,0 +1,19 @@
+funcitons:
+        Repository
+core:
+    handler: Ejecucion de lambda
+    dynamoDB: Metodos genericos
+
+stack:
+    Controllers
+
+sst.config:
+    main
+
+
+
+
+
+getAll: Obtiene todas
+get: filtra por note_id
+list: filtra por user_id

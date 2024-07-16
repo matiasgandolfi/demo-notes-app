@@ -1,0 +1,93 @@
+Crear proyecto 
+
+    npm create sst notes
+    cd notes
+    npm install
+
+
+
+ARQUITECUTRA
+
+
+stacks/— Infraestructura de aplicaciones            /*----------------Controllers-----------------------------*/
+
+        El código que describe la infraestructura de su aplicación sin servidor se ubica en el
+         stacks/directorio de su proyecto. SST utiliza AWS CDK para crear la infraestructura.
+
+packages/— Código de la aplicación
+
+        El código de la función Lambda que se ejecuta cuando se invoca la API se coloca en el packages/functionsdirectorio
+         del proyecto y 
+
+
+
+packages/core
+
+        Contiene nuestra lógica empresarial.
+
+
+
+
+
+
+/*-------------------------------------------------------------------------*/
+
+
+Correr aplicacion 
+
+
+
+
+Settear 
+
+        C:\Users\<nombre Usuario>\.aws\credentials
+
+
+
+
+
+
+/*---------------------Crear una tabla DynamoDB en SST--------------------------------*/
+
+
+Cada tabla de DynamoDB tiene una clave principal. Una vez establecida, esta no se puede modificar. La clave principal identifica de forma única cada elemento de la tabla, de modo que no pueden existir dos elementos con la misma clave. DynamoDB admite dos tipos diferentes de claves principales:
+
+        Clave de partición
+        Clave de partición y clave de ordenación (compuesta)
+
+
+Vamos a utilizar la clave principal compuesta (a la que se hace referencia primaryIndexen el bloque de código anterior), 
+        que nos brinda flexibilidad adicional al consultar los datos. Por ejemplo, si proporciona solo el valor para userId,
+        DynamoDB recuperará todas las notas de ese usuario. O puede proporcionar un valor para userIdy un valor para noteId,
+        para recuperar una nota en particular.
+
+
+
+
+
+
+
+
+
+
+
+
+/*--------------------------Borrar los archivos inncesarios para comenzar a desarrollar la API -----------------------------------------------*/
+
+
+
+Eliminar archivos de plantilla
+
+
+    Para eliminar la pila de inicio, ejecute lo siguiente desde la raíz de su proyecto.
+
+        npx sst remove API
+
+    Elimine también los archivos de plantilla.
+
+        del stacks\MyStack.ts
+        del packages\core\src\todo.ts
+        del packages\core\src\event.ts
+        del packages\functions\src\lambda.ts
+        del packages\functions\src\todo.ts
+        rmdir /s /q packages\functions\src\events

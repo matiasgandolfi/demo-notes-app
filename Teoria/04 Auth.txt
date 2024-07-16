@@ -1,0 +1,55 @@
+Repasemos lo que estamos haciendo aquí.
+
+    * Estamos creando una nueva pila para nuestra infraestructura de autenticación. Si bien no necesitamos crear
+ una pila separada, la estamos usando como ejemplo para mostrar cómo trabajar con varias pilas.
+
+    * El Authconstructo crea un grupo de usuarios de Cognito para nosotros. Usamos la loginpropiedad para indicar que 
+queremos que nuestros usuarios inicien sesión con su correo electrónico.
+
+    * La Authconstrucción también crea un grupo de identidades. La attachPermissionsForAuthUsersfunción nos permite 
+especificar los recursos a los que tienen acceso nuestros usuarios autenticados.
+
+    * Esta nueva AuthStackreferencia hace referencia al bucketrecurso del StorageStacky al apirecurso del ApiStackque creamos anteriormente.
+
+    * Y queremos que accedan a nuestro depósito S3. Veremos esto en detalle a continuación.
+
+    * Finalmente, mostramos los identificadores de los recursos de autenticación que se han creado y 
+devolvemos el recurso de autenticación para que otras pilas puedan acceder a este recurso.
+
+
+
+
+      "POST /notes": {
+        function: "packages/functions/src/create.main",
+        authorizer: "iam",
+      },
+
+
+
+
+
+/*------------------------------Para obtener el User_ID---------------------------------------*/
+
+
+userId: event.requestContext.authorizer?.iam.cognitoIdentity.identityId,
+
+
+
+
+
+
+//USER TEST
+pnpm dlx aws-api-gateway-cli-test --username "admin@example.com" --password "Passw0rd!" --user-pool-id "us-east-1_lTe8VPaHd" --app-client-id "1np7b4c9g28hg9b10458kmqvds" --cognito-region "us-east-1" --identity-pool-id "us-east-1:488ba21b-b3e0-45cc-b2d8-c8727fbad709" --invoke-url "https://06sva174zg.execute-api.us-east-1.amazonaws.com" --api-gateway-region "us-east-1" --path-template "/notes" --method "GET"          
+
+pnpm dlx aws-api-gateway-cli-test \
+--username='admin@example.com' \
+--password='Passw0rd!' \
+--user-pool-id='<USER_POOL_ID>' \
+--app-client-id='<USER_POOL_CLIENT_ID>' \
+--cognito-region='<COGNITO_REGION>' \
+--identity-pool-id='<IDENTITY_POOL_ID>' \
+--invoke-url='<API_ENDPOINT>' \
+--api-gateway-region='<API_REGION>' \
+--path-template='/billing' \
+--method='POST' \
+--body='{"source":"tok_visa","storage":21}'
